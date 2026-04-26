@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music & Quotes 🎵💌</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== TOP NAV ===== -->
+  <nav class="top-nav">
+    <a href="home.html">💖 Home</a> 
+    <a href="messages.html">💌 Message</a>
+    <a href="music.html">🎵 Music</a>
+    <a href="surprise.html">🌸 Surprise</a>
+  </nav>
+
+  <!-- ===== FALLING ITEMS ===== -->
+  <div class="falling-items" id="fallingContainer"></div>
+
+  <!-- ===== HEADER ===== -->
+  <div style="text-align:center; color:#880e4f; z-index:2; position:relative; margin-bottom: 5px;">
+    <h1>🎵 Our Playlist</h1>
+    <p>Tap a card to play – each one holds a little love note</p>
+  </div>
+
+  <!-- ===== 8 RECTANGLES (SONG + QUOTE) ===== -->
+  <div class="rect-container" id="rectContainer">
+
+    <div class="music-rect" data-song="song1.mp3">
+      <span class="song-title">🎶 Perfect</span>
+      <span class="quote-line">"You're perfect to me."</span>
+    </div>
+
+    <div class="music-rect" data-song="song2.mp3">
+      <span class="song-title">🎵 All of Me</span>
+      <span class="quote-line">"Love your curves and edges."</span>
+    </div>
+
+    <div class="music-rect" data-song="song3.mp3">
+      <span class="song-title">🎧 Just the Way</span>
+      <span class="quote-line">"You're amazing, just the way you are."</span>
+    </div>
+
+    <div class="music-rect" data-song="song4.mp3">
+      <span class="song-title">🎼 Thinking Out Loud</span>
+      <span class="quote-line">"We found love right where we are."</span>
+    </div>
+
+    <div class="music-rect" data-song="song5.mp3">
+      <span class="song-title">🎤 Can't Help Falling</span>
+      <span class="quote-line">"Wise men say, only fools rush in."</span>
+    </div>
+
+    <div class="music-rect" data-song="song6.mp3">
+      <span class="song-title">🎹 A Thousand Years</span>
+      <span class="quote-line">"I have loved you for a thousand years."</span>
+    </div>
+
+    <div class="music-rect" data-song="song7.mp3">
+      <span class="song-title">🎸 You Are the Reason</span>
+      <span class="quote-line">"My heart beats for you."</span>
+    </div>
+
+    <div class="music-rect" data-song="song8.mp3">
+      <span class="song-title">🥁 Perfect Symphony</span>
+      <span class="quote-line">"Now I know I have met an angel."</span>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- Music player logic (same as before) -->
+  <script>
+    (function() {
+      const rects = document.querySelectorAll('.music-rect');
+      let currentAudio = null;
+      let currentRect = null;
+
+      rects.forEach(rect => {
+        rect.addEventListener('click', function() {
+          const songFile = this.getAttribute('data-song');
+
+          // If same rectangle clicked again → pause / resume
+          if (currentRect === this) {
+            if (currentAudio && !currentAudio.paused) {
+              currentAudio.pause();
+              this.classList.remove('playing');
+              currentRect = null;
+              currentAudio = null;
+            } else if (currentAudio && currentAudio.paused) {
+              currentAudio.play();
+              this.classList.add('playing');
+            }
+            return;
+          }
+
+          // Stop previous song
+          if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            if (currentRect) currentRect.classList.remove('playing');
+          }
+
+          // Play new song
+          const audio = new Audio(songFile);
+          audio.play().then(() => {
+            this.classList.add('playing');
+            currentAudio = audio;
+            currentRect = this;
+          }).catch(err => {
+            alert('Could not play ' + songFile + '. Make sure the file exists.');
+            console.error(err);
+          });
+
+          audio.addEventListener('ended', () => {
+            this.classList.remove('playing');
+            currentAudio = null;
+            currentRect = null;
+          });
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viji Birthday</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+  <!-- ===== TOP RIGHT INLINE NAV ===== -->
+ <nav class="top-nav">
+    <a href="surprise.html">💖 Surprise</a> 
+    <a href="messages.html">💌 Message</a>
+    <a href="music.html">🎵 Music</a>
+    <a href="gift.html">🌸 Gift</a>
+  </nav>
+
+  <!-- ===== FALLING ITEMS CONTAINER ===== -->
+  <div class="falling-items" id="fallingContainer"></div>
+
+  <!-- ===== ENVELOPE ===== -->
+  <div class="envelope-container">
+    <div class="envelope-body"></div>
+    <div class="envelope-flap" id="flap"></div>
+
+    <div class="letter" id="letter">
+      <button class="close-btn" onclick="closeEnvelope()">✕</button>
+      <h1 class="birthday-heading" id="birthdayHeading">Happy Birthday Sweetheart</h1>
+      <h2>🌸 Dear You,</h2>
+      <p>You are the sunshine<br>of my life.</p>
+      <p class="signature">With love,<br>Me</p>
+    </div>
+
+    <div class="ribbon">
+      <div class="ribbon-band"></div>
+      <div class="ribbon-knot"></div>
+    </div>
+
+    <div class="lotus-seal" id="lotusSeal" onclick="openEnvelope()">
+      <svg width="60" height="60" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" fill="#fce4ec" stroke="#e91e8c" stroke-width="2"/>
+        <g transform="translate(50,50)">
+          <ellipse rx="8" ry="18" fill="#f06292" transform="rotate(0)"/>
+          <ellipse rx="8" ry="18" fill="#e91e8c" transform="rotate(30)"/>
+          <ellipse rx="8" ry="18" fill="#f06292" transform="rotate(60)"/>
+          <ellipse rx="8" ry="18" fill="#e91e8c" transform="rotate(90)"/>
+          <ellipse rx="8" ry="18" fill="#f06292" transform="rotate(120)"/>
+          <ellipse rx="8" ry="18" fill="#e91e8c" transform="rotate(150)"/>
+          <ellipse rx="8" ry="18" fill="#f06292" transform="rotate(180)"/>
+          <ellipse rx="8" ry="18" fill="#e91e8c" transform="rotate(210)"/>
+          <ellipse rx="8" ry="18" fill="#f06292" transform="rotate(240)"/>
+          <ellipse rx="8" ry="18" fill="#e91e8c" transform="rotate(270)"/>
+          <ellipse rx="8" ry="18" fill="#f06292" transform="rotate(300)"/>
+          <ellipse rx="8" ry="18" fill="#e91e8c" transform="rotate(330)"/>
+          <circle r="7" fill="#ad1457"/>
+        </g>
+      </svg>
+    </div>
+    
+    <div class="love-stamp">💌 LOVE</div>
+    <div class="hint" id="hint">click the lotus to open ♡</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
