@@ -148,7 +148,7 @@ body {
 
 .intro-text {
   position: absolute;
-  bottom: 80px; /* sits below envelope */
+  bottom: 235px; /* sits below envelope */
   left: 50%;
   transform: translate(-50%, 100px); /* start hidden below */
   opacity: 0;
@@ -182,7 +182,7 @@ body {
   padding: 22px 18px;
   text-align: center;
   color: #5e3843;
-  z-index: 2;
+  z-index: 5;
   opacity: 0;
   transform: translateY(0); /* only vertical movement will be animated */
   transition:
