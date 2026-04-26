@@ -87,3 +87,11 @@ function closeEnvelope() {
     setTimeout(() => spawnItem(), i * 150);
   }
 })();
+
+window.addEventListener("load", () => {
+  const text = document.getElementById("introText");
+
+  setTimeout(() => {
+    text.classList.add("show");
+  }, 500); // small delay for smooth effect
+});
