@@ -20,18 +20,230 @@
     <a href="surprise.html">💖 Surprise</a> 
     <a href="messages.html">💌 Message</a>
     <a href="music.html">🎵 Music</a>
-    <a href="gift.html">🌸 Gift</a>
+    <a href="gift.html">🌸 gifts</a>
   </nav>
 
   <!-- ===== FALLING ITEMS CONTAINER ===== -->
   <div class="falling-items" id="fallingContainer"></div>
 
-  <!-- ===== PAGE CONTENT ===== -->
-  <div style="text-align:center; color:#880e4f; z-index:2; position:relative;">
-    <h1>🌷 Welcome, Sweetheart</h1>
-    <p>This is your special place.</p>
-  </div>
 
   <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gift Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #fff;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .gift-page {
+      padding: 2rem 1rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Hero */
+    .gift-hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .gift-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+    }
+
+    .gift-hero p {
+      font-size: 15px;
+      color: #888;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    .ribbon {
+      display: inline-block;
+      width: 32px;
+      height: 4px;
+      background: #D4537E;
+      border-radius: 2px;
+      margin: 0.75rem auto;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #FBEAF0;
+      color: #72243E;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Photo Grid */
+    .pic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .pic-card {
+      background: #f5f5f5;
+      border-radius: 12px;
+      border: 0.5px solid #e0e0e0;
+      overflow: hidden;
+    }
+
+    .pic-slot {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #f5f5f5;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .pic-slot:hover {
+      background: #ebebeb;
+    }
+
+    .pic-slot svg {
+      opacity: 0.3;
+    }
+
+    .pic-slot span {
+      font-size: 12px;
+      color: #aaa;
+      letter-spacing: 0.04em;
+    }
+
+    /* Show image when uploaded */
+    .pic-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .pic-label {
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #888;
+      border-top: 0.5px solid #e0e0e0;
+    }
+
+    /* Hidden file input */
+    .file-input {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="gift-page">
+
+  <!-- Hero -->
+  <div class="gift-hero">
+    <span class="tag">🎁 special collection</span>
+    <h1>Our Gift Gallery</h1>
+    <div class="ribbon"></div>
+    <p>A curated space for your four favourite moments</p>
+  </div>
+
+  <!-- Photo Grid -->
+  <div class="pic-grid">
+
+    <div class="pic-card">
+      <div class="pic-slot" onclick="document.getElementById('file1').click()">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="3"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <span>add photo</span>
+        <img id="preview1" alt="Photo 1"/>
+      </div>
+      <div class="pic-label">Photo 1</div>
+      <input type="file" id="file1" class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')"/>
+    </div>
+
+    <div class="pic-card">
+      <div class="pic-slot" onclick="document.getElementById('file2').click()">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="3"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <span>add photo</span>
+        <img id="preview2" alt="Photo 2"/>
+      </div>
+      <div class="pic-label">Photo 2</div>
+      <input type="file" id="file2" class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')"/>
+    </div>
+
+    <div class="pic-card">
+      <div class="pic-slot" onclick="document.getElementById('file3').click()">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="3"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <span>add photo</span>
+        <img id="preview3" alt="Photo 3"/>
+      </div>
+      <div class="pic-label">Photo 3</div>
+      <input type="file" id="file3" class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')"/>
+    </div>
+
+    <div class="pic-card">
+      <div class="pic-slot" onclick="document.getElementById('file4').click()">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="3"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <span>add photo</span>
+        <img id="preview4" alt="Photo 4"/>
+      </div>
+      <div class="pic-label">Photo 4</div>
+      <input type="file" id="file4" class="file-input" accept="image/*" onchange="previewImage(event, 'preview4')"/>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function previewImage(event, previewId) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = document.getElementById(previewId);
+      img.src = e.target.result;
+      img.style.display = 'block';
+      const slot = img.closest('.pic-slot');
+      slot.querySelector('svg').style.display = 'none';
+      slot.querySelector('span').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+
 </body>
 </html>
