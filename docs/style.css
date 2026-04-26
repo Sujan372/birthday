@@ -145,7 +145,6 @@ body {
   z-index: 5;
 }
 
-
 .intro-text {
   position: absolute;
   bottom: 235px; /* sits below envelope */
@@ -158,7 +157,9 @@ body {
   font-style: italic;
   text-align: center;
 
-  transition: transform 1s ease, opacity 1s ease;
+  transition:
+    transform 1s ease,
+    opacity 1s ease;
   z-index: 2;
 }
 
@@ -167,7 +168,6 @@ body {
   transform: translate(-50%, 0);
   opacity: 1;
 }
-
 
 /* Letter – fixed centering */
 .letter {
@@ -546,4 +546,184 @@ body {
   padding: 0 20px;
   position: relative;
   z-index: 2;
+}
+
+/* =========================================================
+   🌐 GLOBAL RESPONSIVE SYSTEM
+   Paste this at the END of your CSS
+========================================================= */
+
+/* ---------- SMALL PHONES (≤480px) ---------- */
+@media (max-width: 480px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  .top-nav {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 10px;
+  }
+
+  .top-nav a {
+    font-size: 12px;
+  }
+
+  /* HEADINGS */
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  /* ===== ENVELOPE PAGE ===== */
+  .envelope-container {
+    width: 90%;
+    height: auto;
+  }
+
+  .letter {
+    width: 90%;
+    margin-left: -45%;
+    padding: 16px;
+  }
+
+  .intro-text {
+    font-size: 0.9rem;
+    bottom: 200px;
+  }
+
+  .birthday-heading {
+    font-size: 1.2rem;
+  }
+
+  /* ===== MUSIC PAGE ===== */
+  .rect-container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .music-rect {
+    width: 100%;
+    height: auto;
+    padding: 12px;
+  }
+
+  .music-rect .song-title {
+    font-size: 0.9rem;
+  }
+
+  .music-rect .quote-line {
+    font-size: 0.7rem;
+  }
+
+  .music-quote {
+    font-size: 0.9rem;
+  }
+
+  /* ===== GALLERY PAGE ===== */
+  .pic-grid {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+  }
+
+  .gift-hero h1 {
+    font-size: 1.6rem;
+  }
+
+  /* ===== MESSAGE LETTER PAGE ===== */
+  .letter-inner {
+    padding: 2rem 1.2rem 2rem 2rem !important;
+  }
+
+  .letter-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .letter-salutation {
+    font-size: 1.2rem;
+  }
+
+  /* ===== PROPOSAL PAGE ===== */
+  .photo-frame {
+    width: 140px;
+    height: 140px;
+  }
+
+  .question-text {
+    font-size: 1.8rem;
+  }
+
+  .emotion-msg {
+    font-size: 0.9rem;
+  }
+
+  .btn-yes {
+    font-size: 1.1rem;
+    padding: 10px 24px;
+  }
+}
+
+/* ---------- TABLETS (481px–768px) ---------- */
+@media (max-width: 768px) {
+  .top-nav {
+    gap: 14px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  /* MUSIC */
+  .music-rect {
+    width: 100%;
+  }
+
+  .rect-container {
+    max-width: 95%;
+  }
+
+  /* GALLERY */
+  .pic-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* LETTER */
+  .letter-inner {
+    padding: 2.5rem 2rem 2.5rem 3rem;
+  }
+
+  /* ENVELOPE */
+  .envelope-container {
+    width: 90%;
+  }
+}
+
+/* ---------- SMALL LAPTOPS (769px–1024px) ---------- */
+@media (max-width: 1024px) {
+  .rect-container {
+    max-width: 90%;
+  }
+
+  .music-rect {
+    width: 100%;
+  }
+
+  .pic-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---------- LARGE SCREENS IMPROVEMENT ---------- */
+@media (min-width: 1200px) {
+  .rect-container {
+    max-width: 700px;
+  }
+
+  .gift-page {
+    max-width: 900px;
+  }
+
+  .quotes-container {
+    max-width: 900px;
+  }
 }
