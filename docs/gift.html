@@ -1,194 +1,543 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gift Gallery 💖</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gift Gallery 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@600;700&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <!-- Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600&family=Lato:wght@300;400&display=swap"
-      rel="stylesheet"
-    />
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      display: block;
+      background: #1a0510;
+    }
 
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(180,40,80,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(120,20,60,0.15) 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 80%, rgba(80,10,40,0.2) 0%, transparent 50%),
+        linear-gradient(160deg, #1f0a18 0%, #120408 50%, #1a0a0e 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-      body {
-        background: #ffe4ec;
-        font-family: "Lato", sans-serif;
-      }
+    /* NAV */
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.1rem 2rem;
+      background: rgba(15,5,10,0.85);
+      border-bottom: 1px solid rgba(200,80,120,0.2);
+      position: sticky;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 200;
+      backdrop-filter: blur(10px);
+    }
+    .top-nav a {
+      font-size: 13px;
+      color: #e8a0b8;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .top-nav a:hover { color: #ffd6e7; text-shadow: 0 0 12px rgba(255,150,180,0.6); }
 
-      /* NAV */
-      .top-nav {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        padding: 1rem;
-        background: #fff0f5;
-        border-bottom: 1px solid #f3c2d3;
-      }
+    /* PAGE */
+    .gift-page {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 5rem;
+    }
 
-      .top-nav a {
-        text-decoration: none;
-        color: #c2185b;
-        font-size: 14px;
-      }
+    /* HERO */
+    .gift-hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: riseUp 1s ease 0.2s both;
+    }
+    .gift-hero .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      color: #d4708a;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .gift-hero h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      color: #f0a0c0;
+      text-shadow: 0 0 30px rgba(220,80,130,0.4);
+      line-height: 1.2;
+    }
+    .gift-hero p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(220,150,180,0.7);
+      margin-top: 0.5rem;
+    }
+    .hero-line {
+      width: 40px; height: 1px;
+      background: #d4708a;
+      margin: 1rem auto 0;
+    }
 
-      .top-nav a:hover {
-        color: #e91e63;
-      }
+    /* HINT */
+    .select-hint {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      color: rgba(220,140,170,0.65);
+      margin-bottom: 1.6rem;
+      animation: riseUp 1s ease 0.4s both;
+      transition: color 0.3s;
+    }
+    .select-hint.maxed { color: rgba(233,30,140,0.75); }
 
-      /* PAGE */
-      .gift-page {
-        padding: 2rem 1rem;
-        max-width: 700px;
-        margin: auto;
-      }
+    /* GRID */
+    .pic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 2rem;
+      animation: riseUp 1s ease 0.5s both;
+    }
 
-      /* HERO */
-      .gift-hero {
-        text-align: center;
-        margin-bottom: 2rem;
-      }
+    /* CARD */
+    .pic-card {
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      border: 2px solid rgba(220,100,150,0.15);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+      transition: transform 0.22s, border-color 0.22s, box-shadow 0.22s;
+      background: rgba(40,10,25,0.6);
+    }
+    .pic-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
 
-      .gift-hero h1 {
-        font-family: "Playfair Display", serif;
-        font-size: 2rem;
-        color: #1a1a1a;
-      }
+    .pic-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.3s;
+    }
 
-      .gift-hero p {
-        color: #777;
-        font-size: 14px;
-        margin-top: 6px;
-      }
+    .pic-label {
+      padding: 10px 12px;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      color: rgba(220,150,180,0.8);
+      background: rgba(20,5,15,0.6);
+    }
 
-      .ribbon {
-        width: 40px;
-        height: 4px;
-        background: #e91e63;
-        margin: 10px auto;
-        border-radius: 2px;
-      }
+    /* Tick overlay */
+    .tick {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e91e8c, #c2185b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.4);
+      transition: opacity 0.25s, transform 0.25s;
+      box-shadow: 0 2px 10px rgba(233,30,140,0.6);
+      z-index: 5;
+      font-size: 14px;
+    }
 
-      /* GRID */
-      .pic-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-      }
+    /* SELECTED STATE */
+    .pic-card.selected {
+      border-color: #e91e8c;
+      box-shadow: 0 0 0 3px rgba(233,30,140,0.3), 0 12px 32px rgba(0,0,0,0.5);
+      transform: translateY(-4px) scale(1.02);
+    }
+    .pic-card.selected .tick { opacity: 1; transform: scale(1); }
+    .pic-card.selected img { filter: brightness(1.08) saturate(1.1); }
+    .pic-card.selected .pic-label { color: #f0a0c0; }
 
-      .pic-card {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        transition: transform 0.2s;
-        cursor: pointer;
-      }
+    /* DIMMED when 2 already selected */
+    .pic-card.dimmed {
+      opacity: 0.45;
+      pointer-events: none;
+    }
 
-      .pic-card:hover {
-        transform: scale(1.03);
-      }
+    /* SUBMIT */
+    .submit-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      animation: riseUp 1s ease 0.7s both;
+    }
 
-      .pic-card img {
-        width: 100%;
-        height: 100%;
-        aspect-ratio: 4/3;
-        object-fit: cover;
-      }
+    .btn-submit {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.35rem;
+      font-weight: 700;
+      padding: 14px 54px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #e91e8c, #c2185b);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(233,30,140,0.4);
+      opacity: 0.3;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-submit.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .btn-submit.active:hover {
+      transform: scale(1.07);
+      box-shadow: 0 10px 32px rgba(233,30,140,0.6);
+    }
 
-      .pic-label {
-        padding: 10px;
-        text-align: center;
-        font-size: 13px;
-        color: #666;
-      }
+    .selected-count {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: rgba(220,140,170,0.6);
+      transition: color 0.3s;
+    }
+    .selected-count.ready { color: rgba(233,30,140,0.8); }
 
-      /* FULLSCREEN VIEW */
-      .fullscreen {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.9);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-      }
+    /* FULLSCREEN */
+    .fullscreen {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.93);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .fullscreen.show { display: flex; }
+    .fullscreen img {
+      max-width: 88%;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+    }
+    .fullscreen-close {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: rgba(220,140,170,0.7);
+      font-size: 0.9rem;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+    .fullscreen-close:hover { color: #f0a0c0; }
 
-      .fullscreen img {
-        max-width: 90%;
-        max-height: 90%;
-        border-radius: 10px;
-      }
+    /* RESULT overlay */
+    .result-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: rgba(20,5,15,0.94);
+      backdrop-filter: blur(10px);
+    }
+    .result-screen.show { display: flex; }
+    .result-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 700;
+      color: #f9a8c9;
+      text-align: center;
+      text-shadow: 0 0 40px rgba(240,80,140,0.6);
+      animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+      padding: 0 1.5rem;
+    }
+    .result-photos {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: riseUp 0.6s ease 0.3s both;
+    }
+    .result-photos img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid rgba(233,30,140,0.5);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+    .result-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(240,180,210,0.8);
+      text-align: center;
+      animation: riseUp 0.6s ease 0.5s both;
+    }
+    .result-back {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      padding: 10px 34px;
+      border-radius: 50px;
+      border: 1.5px solid rgba(233,30,140,0.4);
+      background: transparent;
+      color: #e8a0b8;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      animation: riseUp 0.6s ease 0.7s both;
+    }
+    .result-back:hover { background: rgba(233,30,140,0.15); color: #ffd6e7; }
 
-      .fullscreen.show {
-        display: flex;
-      }
-    </style>
-  </head>
+    /* CONFETTI */
+    .confetti-piece {
+      position: fixed;
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 600;
+      animation: confettiFall 1.5s ease forwards;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translate(var(--cx), var(--cy)) rotate(720deg) scale(0.3); opacity: 0; }
+    }
 
-  <body>
-    <!-- NAV -->
-    <nav class="top-nav">
-      <a href="index.html">🏠 Home</a>
-      <a href="surprise.html">💖 Surprise</a>
-      <a href="messages.html">💌 Message</a>
-      <a href="music.html">🎵 Music</a>
-    </nav>
+    /* FALLING */
+    .falling-items { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .fall-item { position: absolute; top: -40px; opacity: 0; animation: fallDown linear infinite; }
+    @keyframes fallDown {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
 
-    <!-- PAGE -->
-    <div class="gift-page">
-      <div class="gift-hero">
-        <h1>Our Gift Gallery 💖</h1>
-        <div class="ribbon"></div>
-        <p>Your most beautiful moments</p>
-      </div>
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
 
-      <!-- GRID -->
-      <div class="pic-grid">
-        <div class="pic-card" onclick="openFull(this)">
-          <img src="images/Photo1.jpeg" />
-          <div class="pic-label">Our First Memory 💖</div>
-        </div>
+    @media (max-width: 480px) {
+      .top-nav { gap: 1.2rem; }
+      .top-nav a { font-size: 12px; }
+      .result-photos img { width: 110px; height: 110px; }
+    }
+  </style>
+</head>
+<body>
 
-        <div class="pic-card" onclick="openFull(this)">
-          <img src="images/Photo2.jpeg" />
-          <div class="pic-label">Your Smile 🌸</div>
-        </div>
+  <div class="falling-items" id="fallingContainer"></div>
 
-        <div class="pic-card" onclick="openFull(this)">
-          <img src="images/Photo3.jpeg" />
-          <div class="pic-label">My Favorite Moment ✨</div>
-        </div>
+  <nav class="top-nav">
+    <a href="index.html">💖 Home</a>
+    <a href="surprise.html">🌸 Surprise</a>
+    <a href="messages.html">💌 Message</a>
+    <a href="music.html">🎵 Music</a>
+  </nav>
 
-        <div class="pic-card" onclick="openFull(this)">
-          <img src="images/Photo4.jpeg" />
-          <div class="pic-label">Forever Us 💕</div>
-        </div>
-      </div>
+  <!-- RESULT SCREEN -->
+  <div class="result-screen" id="resultScreen">
+    <div class="result-title">Your favourites 💖</div>
+    <div class="result-photos" id="resultPhotos"></div>
+    <div class="result-sub">These are the moments I treasure most too 🥹</div>
+    <button class="result-back" onclick="goBack()">← Go back</button>
+  </div>
+
+  <!-- FULLSCREEN VIEW -->
+  <div class="fullscreen" id="fullscreen" onclick="closeFull()">
+    <img id="fullImg" />
+    <div class="fullscreen-close">tap anywhere to close</div>
+  </div>
+
+  <div class="gift-page">
+
+    <div class="gift-hero">
+      <p class="eyebrow">a gift from the heart</p>
+      <h1>Our Gift Gallery 💖</h1>
+      <p>Your most beautiful moments</p>
+      <div class="hero-line"></div>
     </div>
 
-    <!-- FULLSCREEN VIEW -->
-    <div class="fullscreen" id="fullscreen" onclick="closeFull()">
-      <img id="fullImg" />
+    <div class="select-hint" id="selectHint">Choose your 2 favourite photos, then submit 🌸</div>
+
+    <div class="pic-grid" id="picGrid">
+
+      <div class="pic-card" data-index="0" onclick="handleCard(event, this)">
+        <div class="tick">✓</div>
+        <img src="images/Photo1.jpeg" alt="Memory 1" />
+        <div class="pic-label">Our First Memory 💖</div>
+      </div>
+
+      <div class="pic-card" data-index="1" onclick="handleCard(event, this)">
+        <div class="tick">✓</div>
+        <img src="images/Photo2.jpeg" alt="Memory 2" />
+        <div class="pic-label">Your Smile 🌸</div>
+      </div>
+
+      <div class="pic-card" data-index="2" onclick="handleCard(event, this)">
+        <div class="tick">✓</div>
+        <img src="images/Photo3.jpeg" alt="Memory 3" />
+        <div class="pic-label">My Favourite Moment ✨</div>
+      </div>
+
+      <div class="pic-card" data-index="3" onclick="handleCard(event, this)">
+        <div class="tick">✓</div>
+        <img src="images/Photo4.jpeg" alt="Memory 4" />
+        <div class="pic-label">Forever Us 💕</div>
+      </div>
+
     </div>
 
-    <script>
-      function openFull(card) {
-        const img = card.querySelector("img");
-        document.getElementById("fullImg").src = img.src;
-        document.getElementById("fullscreen").classList.add("show");
-      }
+    <div class="submit-wrap">
+      <div class="selected-count" id="selectedCount">0 of 2 selected</div>
+      <button class="btn-submit" id="btnSubmit" onclick="submitSelection()">Submit 💖</button>
+    </div>
 
-      function closeFull() {
-        document.getElementById("fullscreen").classList.remove("show");
+  </div>
+
+  <script>
+    // Falling petals
+    const symbols = ['🌸','💕','🌹','✨','💖','🌷','⭐','💗'];
+    const fc = document.getElementById('fallingContainer');
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('span');
+      el.className = 'fall-item';
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (0.6 + Math.random() * 0.9) + 'rem';
+      el.style.animationDuration = (7 + Math.random() * 10) + 's';
+      el.style.animationDelay = (Math.random() * 14) + 's';
+      fc.appendChild(el);
+    }
+
+    const MAX = 2;
+    let selectedCards = [];
+
+    function handleCard(e, card) {
+      // Long press / double tap → fullscreen
+      // Single click → select/deselect
+      if (card.classList.contains('selected')) {
+        // Deselect
+        card.classList.remove('selected');
+        selectedCards = selectedCards.filter(c => c !== card);
+      } else {
+        if (selectedCards.length >= MAX) return; // already at max
+        card.classList.add('selected');
+        selectedCards.push(card);
       }
-    </script>
-  </body>
+      updateUI();
+    }
+
+    function updateUI() {
+      const count = selectedCards.length;
+      const hint  = document.getElementById('selectHint');
+      const countEl = document.getElementById('selectedCount');
+      const btnSubmit = document.getElementById('btnSubmit');
+      const allCards  = document.querySelectorAll('.pic-card');
+
+      countEl.textContent = count + ' of ' + MAX + ' selected';
+      countEl.classList.toggle('ready', count === MAX);
+      btnSubmit.classList.toggle('active', count > 0);
+
+      // dim unselected cards if max reached
+      allCards.forEach(c => {
+        if (count >= MAX && !c.classList.contains('selected')) {
+          c.classList.add('dimmed');
+        } else {
+          c.classList.remove('dimmed');
+        }
+      });
+
+      if (count >= MAX) {
+        hint.textContent = 'Perfect! Now hit Submit 💖';
+        hint.classList.add('maxed');
+      } else {
+        hint.textContent = 'Choose your 2 favourite photos, then submit 🌸';
+        hint.classList.remove('maxed');
+      }
+    }
+
+    function openFull(card) {
+      const img = card.querySelector('img');
+      document.getElementById('fullImg').src = img.src;
+      document.getElementById('fullscreen').classList.add('show');
+    }
+
+    function closeFull() {
+      document.getElementById('fullscreen').classList.remove('show');
+    }
+
+    function submitSelection() {
+      if (selectedCards.length === 0) return;
+
+      // Show result photos
+      const resultPhotos = document.getElementById('resultPhotos');
+      resultPhotos.innerHTML = '';
+      selectedCards.forEach(card => {
+        const src = card.querySelector('img').src;
+        const img = document.createElement('img');
+        img.src = src;
+        resultPhotos.appendChild(img);
+      });
+
+      document.getElementById('resultScreen').classList.add('show');
+      launchConfetti();
+      setTimeout(launchConfetti, 500);
+    }
+
+    function goBack() {
+      document.getElementById('resultScreen').classList.remove('show');
+    }
+
+    function launchConfetti() {
+      const colors = ['#ff69b4','#ff1493','#ffb6c1','#fff','#ffd700','#ff6eb4','#e91e8c'];
+      for (let i = 0; i < 55; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.left = (15 + Math.random() * 70) + 'vw';
+        c.style.top  = (10 + Math.random() * 50) + 'vh';
+        const angle = Math.random() * Math.PI * 2;
+        const dist  = 80 + Math.random() * 180;
+        c.style.setProperty('--cx', Math.cos(angle) * dist + 'px');
+        c.style.setProperty('--cy', Math.sin(angle) * dist + 'px');
+        c.style.animationDelay = (Math.random() * 0.4) + 's';
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 2200);
+      }
+    }
+  </script>
+
+</body>
 </html>

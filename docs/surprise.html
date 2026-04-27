@@ -181,7 +181,32 @@
                   font-size 0.3s, opacity 0.3s, padding 0.3s;
     }
 
-    .celebration.show { display: flex; }
+    /* CELEBRATION overlay */
+    .celebration {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(20,5,15,0.92);
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.5s ease;
+    }
+    /* CELEBRATION overlay */
+    .celebration {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(20,5,15,0.92);
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.5s ease;
+    }
 
     .celebration-text {
       font-family: 'Dancing Script', cursive;
@@ -280,7 +305,7 @@
     <a href="index.html">💖 Home</a>
     <a href="messages.html">💌 Message</a>
     <a href="music.html">🎵 Music</a>
-    <a href="gift.html">🌸 Gifts</a>
+    <a href="surprise.html">🌸 Surprise</a>
   </nav>
 
   <!-- CELEBRATION SCREEN -->
@@ -291,16 +316,6 @@
   </div>
 
   <div class="page-wrap">
-
-    <!-- PHOTO -->
-    <div class="photo-frame" id="photoFrame">
-      <!-- Replace src below with your actual photo path e.g. src="viji.jpg" -->
-      <!-- <img src="your-photo.jpg" alt="Our Photo"> -->
-      <div class="photo-placeholder">
-        <span>🌸</span>
-        <p>your photo here</p>
-      </div>
-    </div>
 
     <div class="question-text" id="questionText">Will you be my Girlfriend? 🥺</div>
     <div class="emotion-msg" id="emotionMsg">( I've been waiting to ask you this… )</div>
@@ -343,11 +358,12 @@
     const btnNo     = document.getElementById('btnNo');
     const emotionMsg = document.getElementById('emotionMsg');
 
-    // Position No button initially near the Yes button
+    // Position No button initially next to the Yes button
     function initNoBtn() {
       const yes = document.getElementById('btnYes').getBoundingClientRect();
+      const navH = document.querySelector('.top-nav').offsetHeight;
       btnNo.style.left = (yes.right + 20) + 'px';
-      btnNo.style.top  = yes.top + 'px';
+      btnNo.style.top  = Math.max(yes.top, navH + 10) + 'px';
     }
     window.addEventListener('load', initNoBtn);
 
@@ -377,6 +393,7 @@
 
       // Pick a random position far from avoidX/avoidY
       const margin = 16;
+      const navH = document.querySelector('.top-nav').offsetHeight + 10;
       const bw = btnNo.offsetWidth  || 80;
       const bh = btnNo.offsetHeight || 44;
       const vw = window.innerWidth;
@@ -385,7 +402,7 @@
       let rx, ry, attempts = 0;
       do {
         rx = margin + Math.random() * (vw - bw - margin * 2);
-        ry = margin + Math.random() * (vh - bh - margin * 2);
+        ry = navH + Math.random() * (vh - bh - navH - margin);
         attempts++;
       } while (
         attempts < 20 &&
